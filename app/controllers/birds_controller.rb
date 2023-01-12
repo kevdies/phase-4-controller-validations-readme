@@ -1,6 +1,7 @@
 class BirdsController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
-
+# using find will throw an activerecord::RecordNotFound exception which if we use the above code and put the the method after the with: then any of the below code that throw this error will send our generic response we created in our private methods!!!  i like it.  simple and easy to forget so im writing this out to remember
+# use find instead of find_by for this to work.  find_by will return nil which would let us do if/else statements but not throw an activerecord::RecordNotFound exception so we would need to explicityly state the error message in each action
   # GET /birds
   def index
     birds = Bird.all
